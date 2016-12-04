@@ -1,0 +1,47 @@
+<?php
+
+require_once('modele/billets.php');
+
+if (isset($message)) {
+	echo "<span style='color:green;'>".$message."</span>";
+}
+
+if (isset($_SESSION['user'])) {
+	?>
+	<a href='index.php?action=do_logout'>Déconnexion</a>
+	<a href='index.php?action=new_billet'>Ajouter Billet</a>
+	<?php
+}
+
+else {
+	?>
+	<a href="index.php?action=signup">Inscription</a><a href="index.php?action=login">Connexion</a>
+	<?php
+}
+
+?>
+    <h1>Welcome !</h1>
+
+    <div class="billets-container">
+    <?php
+    $billets = get_billets();
+
+    foreach ($billets as $key => $value) {
+    	$id_user = $value['idUser'];
+		$user = get_author($value['idUser']);
+		$billet = '<div class="single">';
+		$billet .= '<h2>'.$value['title'].'</h2>';
+		foreach ($user as $key2 => $value2) {
+			$billet .= '<i>Auteur : '.$value2['login'].'</i>';
+		}
+		$billet .= '<div class="content">'.$value['content'].'</div>';
+		if (isset($_SESSION['user']) && $id_user == $_SESSION['user']) {
+			$billet .= '<a href="index.php?action=new_billet&billet='.$value['idBillet'].'">Modifier</a>';
+			$billet .= '<a href="index.php?action=delete_billet&billet='.$value['idBillet'].'">Supprimer</a>';
+		}
+		$billet .= '</div>';
+
+		echo $billet;
+	}
+    ?>
+    </div>

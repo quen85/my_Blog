@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title><?php echo(ucfirst($action)); ?></title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+  	<script>tinymce.init({ selector:'textarea' });</script>
+  </head>
+  <body>
+  	<?php include('views/'.$template.'.phtml'); ?>
+  </body>
+</html>
