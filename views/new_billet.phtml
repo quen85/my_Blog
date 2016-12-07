@@ -1,5 +1,3 @@
-<h1>Créer un Billet</h1>
-
 <?php
 
 require_once('modele/billets.php');
@@ -16,12 +14,20 @@ if (isset($_GET['billet'])) {
 		$title = $value['title'];
 		$content = $value['content'];
 	}
+	$action = 'update_billet&billet='.$_GET['billet'];
+	$submit = 'Modifier';
+}
+else{
+	$action = 'add_billet';
+	$submit = 'Ajouter';
 }
 
 ?>
 
-<form action="index.php?action=add_billet" method="post">
+<h1>Créer un Billet</h1>
+
+<form action="index.php?action=<?php echo $action; ?>" method="post">
 <div>Titre : <input type="text" name="title" <?php if(isset($_POST['title'])) { echo ('value="'.$_POST['title'].'"'); } elseif (!empty($billet)) { echo ('value="'.$title.'"'); } ?>></div>
-<div>Contenu : <textarea name="content" <?php if(isset($_POST['content'])) { echo ('value="'.$_POST['content'].'"'); } elseif (!empty($billet)) { echo ('value="'.$content.'"'); } ?>></textarea></div>
-<input type="submit" value="Ajouter">
+<div>Contenu : <textarea name="content" class="content" <?php if(isset($_POST['content'])) { echo ('value="'.$_POST['content'].'"'); } elseif (!empty($billet)) { echo ('value="'.$content.'"'); } ?>></textarea></div>
+<input type="submit" value="<?php echo $submit; ?>">
 </form>

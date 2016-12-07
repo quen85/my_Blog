@@ -41,3 +41,14 @@ function my_escape($data)
 
 	return mysqli_escape_string($link, $data);
 }
+
+function check_adding()
+{
+	$errors = [];
+	if (empty($_POST['title']))
+		$errors['title'] = 'Titre obligatoire';
+	if (empty($_POST['content']))
+		$errors['content'] = 'Contenu obligatoire';
+
+	return $errors;
+}

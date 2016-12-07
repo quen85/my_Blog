@@ -1,15 +1,6 @@
 <?php
 
-function check_adding()
-{
-	$errors = [];
-	if (empty($_POST['title']))
-		$errors['title'] = 'Titre obligatoire';
-	if (empty($_POST['content']))
-		$errors['content'] = 'Contenu obligatoire';
-
-	return $errors;
-}
+require_once('includes/utils.php');
 
 $errors = check_adding();
 
