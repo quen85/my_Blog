@@ -1,6 +1,6 @@
 <?php
 
-require_once('modele/billets.php');
+require_once('modele/posts.php');
 
 if (isset($message)) {
 	echo "<span style='color:green;'>".$message."</span>";
@@ -9,7 +9,7 @@ if (isset($message)) {
 if (isset($_SESSION['user'])) {
 	?>
 	<a href='index.php?action=do_logout'>Déconnexion</a>
-	<a href='index.php?action=new_billet'>Ajouter Billet</a>
+	<a href='index.php?action=new_post'>Ajouter post</a>
 	<?php
 }
 
@@ -22,26 +22,26 @@ else {
 ?>
     <h1>Welcome !</h1>
 
-    <div class="billets-container">
+    <div class="posts-container">
     <?php
-    $billets = get_billets();
+    $posts = get_posts();
 
-    foreach ($billets as $key => $value) {
+    foreach ($posts as $key => $value) {
     	$id_user = $value['idUser'];
 		$user = get_author($value['idUser']);
-		$billet = '<div class="single">';
-		$billet .= '<h2>'.$value['title'].'</h2>';
+		$post = '<div class="single">';
+		$post .= '<h2>'.$value['title'].'</h2>';
 		foreach ($user as $key2 => $value2) {
-			$billet .= '<i>Auteur : '.$value2['login'].'</i>';
+			$post .= '<i>Auteur : '.$value2['login'].'</i>';
 		}
-		$billet .= '<div class="content">'.$value['content'].'</div>';
+		$post .= '<div class="content">'.$value['content'].'</div>';
 		if (isset($_SESSION['user']) && $id_user == $_SESSION['user']) {
-			$billet .= '<a href="index.php?action=new_billet&billet='.$value['idBillet'].'">Modifier</a>';
-			$billet .= '<a href="index.php?action=delete_billet&billet='.$value['idBillet'].'">Supprimer</a>';
+			$post .= '<a href="index.php?action=new_post&post='.$value['idPost'].'">Modifier</a>';
+			$post .= '<a href="index.php?action=delete_post&post='.$value['idPost'].'">Supprimer</a>';
 		}
-		$billet .= '</div>';
+		$post .= '</div>';
 
-		echo $billet;
+		echo $post;
 	}
     ?>
     </div>

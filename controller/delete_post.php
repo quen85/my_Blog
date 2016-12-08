@@ -2,7 +2,7 @@
 
 require_once('modele/user.php');
 
-$query = 'DELETE FROM `billets` WHERE `idBillet` = '.$_GET['billet'];
+$query = 'DELETE FROM `posts` WHERE `idPost` = '.$_GET['post'];
 my_query($query);
 
 $message = 'L\'article a été supprimé !';

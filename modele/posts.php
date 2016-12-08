@@ -1,16 +1,16 @@
 <?php
 
-function get_billets()
+function get_posts()
 {
-	$query = 'SELECT * FROM `billets`';
+	$query = 'SELECT * FROM `posts`';
 	$results = my_fetch_all($query);
 
 	return $results;
 }
 
-function get_billet($id)
+function get_post($id)
 {
-	$query = 'SELECT * FROM `billets` WHERE `idBillet` = '.$id;
+	$query = 'SELECT * FROM `posts` WHERE `idPost` = '.$id;
 	$results = my_fetch_all($query);
 
 	return $results;

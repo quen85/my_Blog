@@ -6,7 +6,7 @@ $errors = check_adding();
 
 if (empty($errors)) 
 {
-	$query = 'UPDATE `billets` SET `title`="'.my_escape($_POST['title']).'",`content`="'.my_escape($_POST['content']).'" WHERE `idBillet` = '.$_GET['billet'];
+	$query = 'UPDATE `posts` SET `title`="'.my_escape($_POST['title']).'",`content`="'.my_escape($_POST['content']).'" WHERE `idPost` = '.$_GET['post'];
 
 	my_query($query);
 	$message = 'Modification réussie !';
@@ -15,6 +15,6 @@ if (empty($errors))
 
 else
 {
-	$template = 'update_billet';
+	$template = 'edit_post';
 }
 
