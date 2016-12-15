@@ -18,14 +18,14 @@ function get_post($id)
 
 function add_post($title, $content)
 {
-	$query = 'INSERT INTO `posts` (`title`, `content`, `createdAt`, `updatedAt`, `idUser`) VALUES (\''.my_escape($title).'\', \''.my_escape($content).'\', \''.date('Y-m-d H:i:s').'\', \''.date('Y-m-d H:i:s').'\', \''.$_SESSION['user'].'\')';
+	$query = 'INSERT INTO `posts` (`title`, `content`, `created`, `updated`, `id_user`) VALUES (\''.my_escape($title).'\', \''.my_escape($content).'\', \''.date('Y-m-d H:i:s').'\', \''.date('Y-m-d H:i:s').'\', \''.$_SESSION['user'].'\')';
 	
 	my_query($query);
 }
 
 function edit_post($title, $content, $id)
 {
-	$query = 'UPDATE `posts` SET `title`="'.my_escape($title).'",`content`="'.my_escape($content).'",`updatedAt`="'.date('Y-m-d H:i:s').'" WHERE `idPost` = '.$id;
+	$query = 'UPDATE `posts` SET `title`="'.my_escape($title).'",`content`="'.my_escape($content).'",`updated`="'.date('Y-m-d H:i:s').'" WHERE `idPost` = '.$id;
 	
 	my_query($query);
 }

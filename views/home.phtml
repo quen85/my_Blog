@@ -19,8 +19,8 @@ $posts = get_posts();
 <div class="main-content home-content">
 	<div class="posts-container">
 	<?php foreach ($posts as $key => $post): 
-		$id_user = $post['idUser'];
-		$user = get_author($post['idUser']); 
+		$id_user = $post['id_user'];
+		$user = get_author($post['id_user']); 
 		$comments = get_comments($post['idPost']); 
 	?>
 		<div class="single">

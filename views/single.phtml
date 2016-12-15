@@ -18,7 +18,7 @@ if (isset($_GET['id'])) {
 	$id = $_GET['id'];
 	$posts = get_post($id);
 	foreach ($posts as $key => $post){
-		$id_user = $post['idUser'];
+		$id_user = $post['id_user'];
 		$user = get_author($id_user);
 	}
 	$comments = get_comments($id); 
