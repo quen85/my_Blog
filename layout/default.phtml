@@ -3,12 +3,27 @@
   <head>
     <meta charset="utf-8">
     <title><?php echo(ucfirst($action)); ?></title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato|Space+Mono" rel="stylesheet">
     <script src="script.js"></script>
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
   	<script>tinymce.init({ selector:'textarea' });</script>
   </head>
   <body>
-  	<?php include('views/'.$template.'.phtml'); ?>
+    <header>
+      <a href="index.php" class="home-link"><p>The Blog</p></a>
+      <div class="user-links">
+        <?php if (isset($_SESSION['user'])): ?>
+          <a href='index.php?action=do_logout'>Déconnexion</a>
+          <a href='index.php?action=new_post'>Publier un article</a>
+        <?php else: ?>
+          <a href="index.php?action=signup">Inscription</a>
+          <a href="index.php?action=login">Connexion</a>
+        <?php endif; ?>
+      </div>
+    </header>
+    <div class="main">
+  	 <?php include('views/'.$template.'.phtml'); ?>
+    </div>
   </body>
 </html>

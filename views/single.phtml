@@ -1,0 +1,82 @@
+<?php
+
+require_once('modele/posts.php');
+require_once('modele/comments.php');
+require_once('modele/user.php');
+
+if (isset($message)) {
+	echo "<span style='color:green;'>".$message."</span>";
+}
+
+if (isset($errors)) {
+  foreach ($errors as $key=>$error) {
+    echo "<span style='color:red;'><b>erreur: </b>".$key.": ".$error."</span><br>";
+  }
+}
+
+if (isset($_GET['id'])) {
+	$id = $_GET['id'];
+	$posts = get_post($id);
+	foreach ($posts as $key => $post){
+		$id_user = $post['idUser'];
+		$user = get_author($id_user);
+	}
+	$comments = get_comments($id); 
+}
+
+?>
+<div class="main-content single-content">
+	<div class="posts-container">
+		<div class="single">
+			<h1><?php echo $post['title']; ?></h1>
+			<?php foreach($user as $key2 => $author): ?>
+				<i>Auteur : <?php echo $author['login']; ?></i>
+			<?php endforeach; ?>
+			<div class="content"><?php echo $post['content'] ?></div>
+			<?php if (isset($_SESSION['user'])): ?>
+				<?php if ($id_user == $_SESSION['user']): ?>
+					<div class="edit-links post-links">
+						<a href="index.php?action=new_post&post=<?php echo $post['idPost'] ?>">Modifier</a>
+						<a href="index.php?action=delete_post&post=<?php echo $post['idPost'] ?>">Supprimer</a>
+					</div>
+				<?php endif; ?>
+			<?php endif; ?>
+			<?php if (isset($comments)): ?>
+				<h2>Commentaires</h2>
+				<div class="comments-container">
+					<?php foreach($comments as $comment): ?>
+						<?php 
+							$id_comment_author = $comment['idUser'];
+							$comment_authors = get_author($id_comment_author); 
+						?>
+						<div class="comment">
+							<div class="comment-content">
+								<p><?php echo $comment['content'] ?></p>
+								<?php foreach($comment_authors as $comment_author): ?>
+									<span>Auteur : <?php echo $comment_author['login']; ?></span>
+								<?php endforeach; ?>
+							</div>
+							<?php if (isset($_SESSION['user'])): ?>
+								<?php if ($id_comment_author == $_SESSION['user']): ?>
+									<div class="edit-links">
+										<a href="index.php?action=new_comment&comment=<?php echo $comment['idComment'] ?>&id=<?php echo $post['idPost'] ?>">Modifier votre commentaire</a>
+										<a href="index.php?action=delete_comment&comment=<?php echo $comment['idComment'] ?>&id=<?php echo $post['idPost'] ?>">Supprimer votre commentaire</a>
+									</div>
+								<?php endif; ?>
+							<?php endif; ?>
+						</div>
+					<?php endforeach; ?>
+					<?php if (isset($_SESSION['user'])): ?>
+						<form action="index.php?action=add_comment&id=<?php echo $post['idPost'] ?>" method="post">
+							<div>
+								<label>Commentez cet article!</label> 
+								<textarea name="content" class="content"></textarea>
+							</div>
+							<input type="submit" value="Commenter">
+						</form>
+					<?php endif; ?>
+				</div>
+			<?php endif; ?>
+		</div>
+	</div>
+</div>

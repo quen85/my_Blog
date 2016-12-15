@@ -1,9 +1,9 @@
 <?php
 
-require_once('modele/user.php');
+require_once('modele/posts.php');
 
-$query = 'DELETE FROM `posts` WHERE `idPost` = '.$_GET['post'];
-my_query($query);
+delete_post($_GET['post']);
 
 $message = 'L\'article a été supprimé !';
 $template = 'home';
+$action = 'home';

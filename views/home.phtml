@@ -1,47 +1,56 @@
 <?php
 
 require_once('modele/posts.php');
+require_once('modele/comments.php');
+require_once('modele/user.php');
 
 if (isset($message)) {
 	echo "<span style='color:green;'>".$message."</span>";
 }
 
-if (isset($_SESSION['user'])) {
-	?>
-	<a href='index.php?action=do_logout'>Déconnexion</a>
-	<a href='index.php?action=new_post'>Ajouter post</a>
-	<?php
-}
-
-else {
-	?>
-	<a href="index.php?action=signup">Inscription</a><a href="index.php?action=login">Connexion</a>
-	<?php
-}
+$posts = get_posts();
 
 ?>
-    <h1>Welcome !</h1>
-
-    <div class="posts-container">
-    <?php
-    $posts = get_posts();
-
-    foreach ($posts as $key => $value) {
-    	$id_user = $value['idUser'];
-		$user = get_author($value['idUser']);
-		$post = '<div class="single">';
-		$post .= '<h2>'.$value['title'].'</h2>';
-		foreach ($user as $key2 => $value2) {
-			$post .= '<i>Auteur : '.$value2['login'].'</i>';
-		}
-		$post .= '<div class="content">'.$value['content'].'</div>';
-		if (isset($_SESSION['user']) && $id_user == $_SESSION['user']) {
-			$post .= '<a href="index.php?action=new_post&post='.$value['idPost'].'">Modifier</a>';
-			$post .= '<a href="index.php?action=delete_post&post='.$value['idPost'].'">Supprimer</a>';
-		}
-		$post .= '</div>';
-
-		echo $post;
-	}
-    ?>
-    </div>
+<div class="cover">
+	<div class="cover-overlay">
+		<h1>Welcome on THE BLOG!</h1>
+	</div>
+</div>
+<div class="main-content home-content">
+	<div class="posts-container">
+	<?php foreach ($posts as $key => $post): 
+		$id_user = $post['idUser'];
+		$user = get_author($post['idUser']); 
+		$comments = get_comments($post['idPost']); 
+	?>
+		<div class="single">
+			<a href="index.php?action=single&id=<?php echo $post['idPost'] ?>">
+				<div class="post-content">
+					<h2><?php echo $post['title']; ?></h2>
+					<?php foreach ($user as $key2 => $author): ?>
+						<span>rédigé par <?php echo $author['login'] ?></span>
+					<?php endforeach; ?>
+					<div class="content"><?php echo $post['content'] ?></div>
+				</div>
+			</a>
+			<?php if (!empty($comments)): ?>
+				<h3>Commentaires</h3>
+				<div class="comments-container">
+					<?php foreach($comments as $comment): ?>
+						<?php 
+							$id_comment_author = $comment['idUser'];
+							$comment_authors = get_author($id_comment_author); 
+						?>
+						<div class="comment">
+							<p><?php echo $comment['content'] ?></p>
+							<?php foreach($comment_authors as $comment_author): ?>
+								<i>Auteur : <?php echo $comment_author['login']; ?></i>
+							<?php endforeach; ?>
+						</div>
+					<?php endforeach; ?>
+				</div>
+			<?php endif; ?>
+		</div>
+	<?php endforeach; ?>
+	</div>
+</div>

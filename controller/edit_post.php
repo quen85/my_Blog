@@ -1,14 +1,13 @@
 <?php
 
-require_once('includes/utils.php');
+require_once('modele/posts.php');
 
-$errors = check_adding();
+$errors = check_adding_post();
 
 if (empty($errors)) 
 {
-	$query = 'UPDATE `posts` SET `title`="'.my_escape($_POST['title']).'",`content`="'.my_escape($_POST['content']).'" WHERE `idPost` = '.$_GET['post'];
+	edit_post($_POST['title'], $_POST['content'], $_GET['post']);
 
-	my_query($query);
 	$message = 'Modification réussie !';
 	$template = 'home';
 }

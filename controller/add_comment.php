@@ -1,19 +1,18 @@
 <?php
 
-require_once('includes/utils.php');
+require_once('modele/comments.php');
 
-$errors = check_adding();
+$errors = check_adding_comment();
 
 if (empty($errors)) 
 {
-	$query = 'INSERT INTO `comments` (`title`, `content`, `idUser`, `idPost`) VALUES (\''.my_escape($_POST['title']).'\', \''.my_escape($_POST['content']).'\', \''.$_SESSION['user'].'\')';
+	add_comment($_POST['content'], $_GET['id']);
 
-	my_query($query);
 	$message = 'Ajout du commentaire au blog réussi !';
-	$template = 'home';
+	$template = 'single';
 }
 
 else
 {
-	$template = 'add_comment';
+	$template = 'single';
 }

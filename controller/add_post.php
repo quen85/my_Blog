@@ -1,14 +1,13 @@
 <?php
 
-require_once('includes/utils.php');
+require_once('modele/posts.php');
 
-$errors = check_adding();
+$errors = check_adding_post();
 
 if (empty($errors)) 
 {
-	$query = 'INSERT INTO `posts` (`title`, `content`, `idUser`) VALUES (\''.my_escape($_POST['title']).'\', \''.my_escape($_POST['content']).'\', \''.$_SESSION['user'].'\')';
+	add_post($_POST['title'], $_POST['content']);
 
-	my_query($query);
 	$message = 'Ajout au blog réussi !';
 	$template = 'home';
 }
